@@ -23,6 +23,80 @@ void toLowerCase(char *str)
     }
 }
 
+// for sorting the titles alphabticaly
+
+void sortTitleAlphabetical(bookes arr[], int n)
+{
+    char temparr[255];
+    for (int i = 0; i < n; i++)
+    {
+        for (int j = i + 1; j < n; j++)
+        {
+            if (strcmp(arr[i].title, arr[j].title) > 0)
+            {
+                strcpy(temparr, arr[i].title);
+                strcpy(arr[i].title, arr[j].title);
+                strcpy(arr[j].title, temparr);
+            }
+        }
+    }
+}
+
+// for sorting the authors alphabticaly
+
+void sortAuthersAlphabetical(bookes arr[], int n)
+{
+    char temparr[255];
+    for (int i = 0; i < n; i++)
+    {
+        for (int j = i + 1; j < n; j++)
+        {
+            if (strcmp(arr[i].author, arr[j].author) > 0)
+            {
+                strcpy(temparr, arr[i].author);
+                strcpy(arr[i].author, arr[j].author);
+                strcpy(arr[j].author, temparr);
+            }
+        }
+    }
+}
+
+// sort by price
+void sortByPrice(bookes arr[], int n)
+{
+    int i, j, temp;
+    for (int i = 0; i < n; i++)
+    {
+        for (int j = i + 1; j < n; j++)
+        {
+            if (arr[i].price > arr[j].price)
+            {
+                temp = arr[i].price;
+                arr[i].price = arr[j].price;
+                arr[j].price = temp;
+            }
+        }
+    }
+}
+
+// print array
+void printArray(bookes arr[], int n)
+{
+    for (int i = 0; i < n; i++)
+    {
+        if (strcmp(arr[i].title, "empty") == 0)
+        {
+        }
+        else
+        {
+            printf("book title: %s \n", arr[i].title);
+            printf(" book author: %s \n", arr[i].author);
+            printf(" book price :%d \n", arr[i].price);
+            printf(" book in stock :%d \n", arr[i].stoke);
+        }
+    }
+}
+
 // Function to add a book
 void addBook(bookes arr[], int num)
 {
@@ -172,7 +246,7 @@ void deletebook(bookes arr[], char name[], int num)
         if (strcmp(arr[i].title, name) == 0)
         {
             printf("are you sure you want to delete this book?\n 1.yes\n 2.no\n");
-
+            scanf("%d",&choice);
             switch (choice)
             {
             case 1:
@@ -233,7 +307,6 @@ void modefi(bookes arr[], char name[], int num)
                 scanf(" %[^\n]s", newname);
                 getchar();
 
-                // Convert new title to lowercase
                 toLowerCase(newname);
 
                 // Update the book title
@@ -245,7 +318,6 @@ void modefi(bookes arr[], char name[], int num)
                 scanf(" %[^\n]s", newauthor);
                 getchar();
 
-                // Convert new author name to lowercase
                 toLowerCase(newauthor);
 
                 // Update the author name
@@ -269,7 +341,6 @@ void modefi(bookes arr[], char name[], int num)
                 scanf(" %[^\n]s", newname);
                 getchar();
 
-                // Convert new title to lowercase
                 toLowerCase(newname);
 
                 // Update the book title
@@ -279,7 +350,6 @@ void modefi(bookes arr[], char name[], int num)
                 scanf(" %[^\n]s", newauthor);
                 getchar();
 
-                // Convert new author name to lowercase
                 toLowerCase(newauthor);
 
                 // Update the author name
@@ -335,7 +405,7 @@ void search(bookes arr[], char name[], int num)
     int i, choice;
     for (size_t i = 0; i < num; i++)
     {
-        if (strcmp(arr[i].title, num) == 0)
+        if (strcmp(arr[i].title, name) == 0)
         {
             printf("the booke name is %s", arr[i].title);
             printf("the booke author is %s", arr[i].author);
@@ -368,32 +438,45 @@ void search(bookes arr[], char name[], int num)
 void allbookes(bookes arr[], int num)
 {
     int i, choice;
-    for (i = 0; i < num; i++)
+    printf("what do you what toy see \n");
+    printf("1- all bookes by title order\n");
+    printf("2- all bookes by auther order\n");
+    printf("3- all bookes by price order\n");
+    scanf("%d",choice   );
+    switch (choice)
     {
-        if (strcmp(arr[i].title, "empty") == 0)
-        {
-            printf("we did not find this book\n");
-            printf("do you want to continu\n");
-            scanf("%d", &choice);
-            if (choice != 1)
-            {
-                exit(0);
-            }
-        }
-        else
-        {
-            printf("the booke name is %s", arr[i].title);
-            printf("the booke author is %s", arr[i].author);
-            printf("the booke price is %s", arr[i].price);
-            printf("the booke stock is %s", arr[i].stoke);
-        }
-        printf("thes are all the bookes form our booke store \n");
-        printf("do you want to continu\n");
-        scanf("%d", choice);
+    case 1:
+        sortTitleAlphabetical(arr, num);
+        printArray(arr, num);
+        printf("this is all the booke we have here do you want to continu\n");
+        scanf("%d", &choice);
         if (choice != 1)
         {
             exit(0);
         }
+        break;
+    case 2:
+        sortAuthersAlphabetical(arr, num);
+        printArray(arr, num);
+        printf("this is all the booke we have here do you want to continu\n");
+        scanf("%d", &choice);
+        if (choice != 1)
+        {
+            exit(0);
+        }
+        break;
+    case 3:
+        sortByPrice(arr, num);
+        printArray(arr, num);
+        printf("this is all the booke we have here do you want to continu\n");
+        scanf("%d", &choice);
+        if (choice != 1)
+        {
+            exit(0);
+        }
+        break;
+    default:
+        break;
     }
 }
 
@@ -408,6 +491,7 @@ int main()
     while (1)
     {
         system("clear");
+        system("cls");
         printf("1. Add Book\n");
         printf("2. Delete Book\n");
         printf("3. modefi\n");
@@ -426,6 +510,7 @@ int main()
             printf("what is the name of the book that you want to delete?\n");
             scanf(" %[^\n]s", &name);
             getchar();
+            toLowerCase(name);
             deletebook(bookeList, name, index);
 
             break;
@@ -433,12 +518,14 @@ int main()
             printf("what is the name of the book that you want to delete?\n");
             scanf(" %[^\n]s", &name);
             getchar();
+            toLowerCase(name);
             modefi(bookeList, name, index);
             break;
         case 4:
             printf("what is the name of the book that you'r looking for?\n");
             scanf(" %[^\n]s", &name);
             getchar();
+            toLowerCase(name);
             search(bookeList, name, index);
             break;
         case 5:
