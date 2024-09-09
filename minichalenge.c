@@ -142,7 +142,7 @@ void addBook(bookes arr[], int num)
                 printf("Enter the name of the author: ");
                 scanf(" %[^\n]s", arr[num].author);
                 getchar();
-                
+
                 toLowerCase(arr[num].author);
 
                 printf("Enter the price of the book: ");
@@ -171,16 +171,25 @@ void deletebook(bookes arr[], char name[], int num)
     {
         if (strcmp(arr[i].title, name) == 0)
         {
-            strcpy(arr[i].title, "empty");
-            strcpy(arr[i].author, "empty");
-            arr[i].price = 0;
-            arr[i].stoke = 0;
-            printf("booke was deleted succefully\n");
-            printf("do you want to continu\n");
-            scanf("%d", &choice);
-            if (choice != 1)
+            printf("are you sure you want to delete this book?\n 1.yes\n 2.no\n");
+
+            switch (choice)
             {
-                exit(0);
+            case 1:
+                strcpy(arr[i].title, "empty");
+                strcpy(arr[i].author, "empty");
+                arr[i].price = 0;
+                arr[i].stoke = 0;
+                printf("booke was deleted succefully\n");
+                printf("do you want to continu\n");
+                scanf("%d", &choice);
+                if (choice != 1)
+                {
+                    exit(0);
+                }
+                break;
+            default:
+                break;
             }
         }
         else
@@ -202,60 +211,95 @@ void modefi(bookes arr[], char name[], int num)
     char newname[50], newauthor[50];
     int newprice, newstoke;
 
+    // Convert input name to lowercase to ensure case-insensitive matching
+    toLowerCase(name);
+
     for (i = 0; i < num; i++)
     {
-        if (strcmp(arr[i].title, name) == 0)
+        // Convert existing title to lowercase for comparison
+        char lowerTitle[200];
+        strcpy(lowerTitle, arr[i].title);
+        toLowerCase(lowerTitle);
+
+        if (strcmp(lowerTitle, name) == 0)
         {
-            printf("what do you want to modify: \n1.title\n2.author\n3.price\n4.stoke\n5.all of them");
+            printf("What do you want to modify:\n1. Title\n2. Author\n3. Price\n4. Stock\n5. All of them\n");
             scanf("%d", &choice);
+
             switch (choice)
             {
             case 1:
-                printf("what is the new title");
-                scanf(" %[^\n]s", &newname);
+                printf("What is the new title: ");
+                scanf(" %[^\n]s", newname);
                 getchar();
-                strcat(arr[i].title, newname);
+
+                // Convert new title to lowercase
+                toLowerCase(newname);
+
+                // Update the book title
+                strcpy(arr[i].title, newname);
                 break;
+
             case 2:
-                printf("who is the new author");
-                scanf(" %[^\n]s", &newauthor);
+                printf("Who is the new author: ");
+                scanf(" %[^\n]s", newauthor);
                 getchar();
-                strcat(arr[i].title, newname);
+
+                // Convert new author name to lowercase
+                toLowerCase(newauthor);
+
+                // Update the author name
+                strcpy(arr[i].author, newauthor);
                 break;
+
             case 3:
-                printf("what is the new price\n");
+                printf("What is the new price: ");
                 scanf("%d", &newprice);
                 arr[i].price = newprice;
                 break;
+
             case 4:
-                printf("what is the new stockm\n");
+                printf("What is the new stock: ");
                 scanf("%d", &newstoke);
-                arr[i].price = newprice;
+                arr[i].stoke = newstoke;
                 break;
+
             case 5:
-                printf("what is the new title");
-                scanf(" %[^\n]s", &newname);
+                printf("What is the new title: ");
+                scanf(" %[^\n]s", newname);
                 getchar();
-                strcat(arr[i].title, newname);
 
-                printf("who is the new author");
-                scanf(" %[^\n]s", &newauthor);
+                // Convert new title to lowercase
+                toLowerCase(newname);
+
+                // Update the book title
+                strcpy(arr[i].title, newname);
+
+                printf("Who is the new author: ");
+                scanf(" %[^\n]s", newauthor);
                 getchar();
-                strcat(arr[i].title, newname);
 
-                printf("what is the new price\n");
+                // Convert new author name to lowercase
+                toLowerCase(newauthor);
+
+                // Update the author name
+                strcpy(arr[i].author, newauthor);
+
+                printf("What is the new price: ");
                 scanf("%d", &newprice);
                 arr[i].price = newprice;
 
-                printf("what is the new stockm\n");
+                printf("What is the new stock: ");
                 scanf("%d", &newstoke);
-                arr[i].price = newprice;
+                arr[i].stoke = newstoke;
 
                 break;
             }
-            printf("booke was modified succefully\n");
-            printf("do you want to continu\n");
+
+            printf("Book was modified successfully.\n");
+            printf("Do you want to continue? (1 for Yes, other for No): ");
             scanf("%d", &choice);
+
             if (choice != 1)
             {
                 exit(0);
@@ -263,9 +307,10 @@ void modefi(bookes arr[], char name[], int num)
         }
         else if (strcmp(name, "empty") == 0)
         {
-            printf("we did not find this book\n");
-            printf("do you want to continu\n");
+            printf("We did not find this book.\n");
+            printf("Do you want to continue? (1 for Yes, other for No): ");
             scanf("%d", &choice);
+
             if (choice != 1)
             {
                 exit(0);
@@ -273,9 +318,10 @@ void modefi(bookes arr[], char name[], int num)
         }
         else
         {
-            printf("we did not find this book\n");
-            printf("do you want to continu\n");
+            printf("We did not find this book.\n");
+            printf("Do you want to continue? (1 for Yes, other for No): ");
             scanf("%d", &choice);
+
             if (choice != 1)
             {
                 exit(0);
